@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using pruebalibreria.Libreria.Clases;
 using pruebalibreria.Libreria.Logica;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace pruebalibreria.Controllers
 {
     [Route("api/[controller]")]
+    [DisableCors]
     [ApiController]
     public class libreriaController : ControllerBase
     {
@@ -48,16 +50,52 @@ namespace pruebalibreria.Controllers
         }
 
         [HttpGet("buscarLibros")]
-        public ActionResult<string> buscarLibros()
-        {
-            return "Prueba Exitosa";
-        }
-
-        [HttpGet("buscarLibros/{numero}")]
-        public ActionResult<List<Libro>> buscarLibros(int numero)
+        public ActionResult<List<Libro>> buscarLibros()
         {
             AdministracionLibro administracion = new AdministracionLibro();
-            return administracion.consultarLibros();
+            return administracion.consultarTodosLosLibros();
+        }
+
+        [HttpPost("buscarLibrosFiltros")]
+        public ActionResult<List<Libro>> buscarLibrosFiltros([FromBody] Libro libro)
+        {
+            AdministracionLibro administracion = new AdministracionLibro();
+            return administracion.consultarLibrosConFiltro(libro);
+        }
+
+        [HttpPost("consultarUsuario")]
+        public ActionResult<int> consultarUsuario([FromBody]  Usuario usuario)
+        {
+            AdministracionUsuariocs administracion = new AdministracionUsuariocs();
+            return administracion.consultarUsuario(usuario);
+        }
+
+        [HttpPost("insertarUsuario")]
+        public ActionResult<int> insertarUsuario([FromBody] Usuario usuario)
+        {
+            AdministracionUsuariocs administracion = new AdministracionUsuariocs();
+            return administracion.CrearUsuario(usuario);
+        }
+
+        [HttpPost("insertarResena")]
+        public ActionResult<int> insertarResena([FromBody] Resenas resenas)
+        {
+            AdministracionLibro administracion = new AdministracionLibro();
+            return administracion.IngresarResena(resenas);
+        }
+
+        [HttpPost("ConsultarResena")]
+        public ActionResult<List<Resenas>> ConsultarResena([FromBody] Resenas resenas)
+        {
+            AdministracionLibro administracion = new AdministracionLibro();
+            return administracion.consultaResenasLibro(resenas);
+        }
+
+        [HttpPost("ExisteUsuario")]
+        public ActionResult<bool> ConsultarResena([FromBody] Usuario usuario)
+        {
+            AdministracionUsuariocs administracion = new AdministracionUsuariocs();
+            return administracion.exiteUsuario(usuario);
         }
     }
 }

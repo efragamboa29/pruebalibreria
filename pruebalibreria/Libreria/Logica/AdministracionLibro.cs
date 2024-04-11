@@ -9,21 +9,28 @@ namespace pruebalibreria.Libreria.Logica
 {
     public class AdministracionLibro
     {
-        public List<Libro> consultarLibros()
+        public List<Libro> consultarTodosLosLibros()
         {
             DBLibro dblibro = new DBLibro();
-            dblibro.consultarLibros();
-            return new List<Libro>() { new Libro() { autor = "pedro", id = 1, categoria = "suspenso", nombre = "El final", resumen = "es bueno" } };
+            return dblibro.consultarTodosLibros();
         }
 
-        public Libro consultaResenasLibro()
+        public List<Resenas> consultaResenasLibro(Resenas resenas)
         {
-            return new Libro() { autor = "pedro", id = 1, categoria = "suspenso", nombre = "El final", resumen = "es bueno" };
+            DBLibro dblibro = new DBLibro();
+            return dblibro.consultarResenas(resenas);
         }
 
-        public int IngresarResena(Libro libro)
+        public List<Libro> consultarLibrosConFiltro(Libro libro)
         {
-            return 1;
+            DBLibro dblibro = new DBLibro();
+            return dblibro.consultarLibrosConFiltro(libro);
+        }
+
+        public int IngresarResena(Resenas resenas)
+        {
+            DBLibro dblibro = new DBLibro();
+            return dblibro.insertarResena(resenas);
         }
     }
 }
